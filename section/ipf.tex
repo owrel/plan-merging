@@ -245,14 +245,14 @@ Let \(\gamma\) being a set of path of length \(n\), where all of the path have t
 \] Considering then a set of \(k\) distant paths \(DP \subset \gamma \), \(\pi = pick(\gamma)\), \(\pi \notin DP \), \(\pi\) is distant towards \(DP\) (which means that if we add \(\pi\) to \(DP\), \(DP\) is still distant) if no \(\pi' = pick(\gamma), \pi' \neq \pi\) exist such as \( Distance(\pi,DP) < Distance(\pi',DP)\).
 
 
-\subsubsection{Heatmap}\label{sec:heatmap-}
+\subsubsection{Heatmap}\label{sec:heatmap}
 
 Heatmap~\cite{atstfestko20a} is about projecting likelihood of presence of agents on vertices. Likelihood refers to the chance of an agent to be positioned at a specific vertex of the graph at a time step \(t\). We introduce the function \(\phi\) which compute likelihood of the vertex \(v\) at time step \(t\) for the set of path \(\gamma\) as such:
 
 \[
-  \phi(v, t, \gamma) = \frac{ \{ \pi | \pi \in \gamma, \pi(t) = v \}}{|\gamma| }
+  \phi(v, t, \gamma) = \frac{ |\{ \pi | \pi \in \gamma, \pi(t) = v \}|}{|\gamma| }
 \]
-
+  
 From this definition, we can compute the first three step of an agent with an associated \(|\gamma|=3\) below (figure~\ref{img:heatmap}).
 
 \begin{figure}[H]

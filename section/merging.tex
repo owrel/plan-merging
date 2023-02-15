@@ -110,7 +110,7 @@ We can use solving strategies described in paper~\cite{husvobbass22a,husvobbass2
 
 An advantage of the subgraphs approach is that the approach can work till the subgraph contains the initial and final position and is connected. We can then, instead of increasing its size as we proposed before, prune part of the graph. To do so, we can aim specific vertices of the graph that can be identified using heatmap (see~\ref{sec:heatmap}). In a way, we can try to reduce \(\Phi\) values of the global heatmap by removing some vertices of subgraphs. We can imagine different criteria that would be deciding which vertex can, or should be pruned, for instance we can select vertex of the subgraph that has a high \(\Phi\) value but a low \(\phi\), in other words, removing vertices that are, for an agent not essential, but used by other agents.
 
-On the other hand, heatmap can be used to tune the different approach we described before. For instance, we can apply bigger diamond extension on a vertex that have a conflict and a high \(\Phi\) value.  
+On the other hand, heatmap can be used to tune the different approach we described before. For instance, we can apply bigger diamond extension on a vertex that have a conflict and a high \(\Phi\) value. 
 
 
 
