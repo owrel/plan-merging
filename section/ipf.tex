@@ -244,7 +244,41 @@ Let \(\gamma\) being a set of path of length \(n\), where all of the path have t
   Distance(\pi,\gamma) = \sum^{\pi'\in\gamma}{distance(\pi,\pi')}   
 \] Considering then a set of \(k\) distant paths \(DP \subset \gamma \), \(\pi = pick(\gamma)\), \(\pi \notin DP \), \(\pi\) is distant towards \(DP\) (which means that if we add \(\pi\) to \(DP\), \(DP\) is still distant) if no \(\pi' = pick(\gamma), \pi' \neq \pi\) exist such as \( Distance(\pi,DP) < Distance(\pi',DP)\).
 
- 
+
+\subsubsection{Heatmap}\label{sec:heatmap-}
+
+Heatmap~\cite{atstfestko20a} is about projecting likelihood of presence of agents on vertices. Likelihood refers to the chance of an agent to be positioned at a specific vertex of the graph at a time step \(t\). We introduce the function \(\phi\) which compute likelihood of the vertex \(v\) at time step \(t\) for the set of path \(\gamma\) as such:
+
+\[
+  \phi(v, t, \gamma) = \frac{ \{ \pi | \pi \in \gamma, \pi(t) = v \}}{|\gamma| }
+\]
+
+From this definition, we can compute the first three step of an agent with an associated \(|\gamma|=3\) below (figure~\ref{img:heatmap}).
+
+\begin{figure}[H]
+  \centering
+  \caption{Heatmap example of the first three time step for a \(|\gamma|=3\) }\label{img:heatmap}
+  \includegraphics[width=10cm]{img/heatmap.drawio.png}
+\end{figure}
+
+This heatmap-per-agent can be used to compute a ``global one'', to do so, for each vertex and for each time step, we sum each \(\phi\) and then divide it by the number of agent (see appendix~\ref{apx:heatmap_and_global}), we will refer to this as \(\Phi\);
+
+\[
+  \Phi(v,t,\tau) = \frac{ {\sum^{\gamma \in \tau} }{\phi(v,t,\gamma)}}  {|\tau|}
+\]
+
+
+
+Computed this way, global heat maps no longer represent likelihood of presence, rather more an indicator. Both heat maps together can be useful for different parts of plan merging resolution.
+
+
+
+The heatmap we proposed is from the perspective of agents, but it can also be considered with regards to the \(\gamma\)'s scope, especially paths and then, can become a property of a path. These likelihoods per paths gives us information one the path itself; having highs values represent that a vertex is used in different paths of \(\gamma\), a low average value represent a higher diversity and so on.
+
+It becomes more interesting when we use these values as an objective function; allowing a maximum value for any \(\phi\) in an \(\gamma\) directly influence the way \(\gamma\) would be constituted; for instance, limiting the \(\phi\) value of a \(gamma\) for any vertex at maximum 0.4, forces the number of paths of at least three. Generally, the maximum or minimum value of \(\phi\) for any \(\gamma\) gives us information on how the paths are interacting.
+
+
+
 % \subsection{Building interesting \(\tau\)}
 % We defined different function that can represent properties of path in \(\tau\), however we can try to imagine set of path of different properties that makes \(\tau\) a ``better'' input for the merging section than a set of path containing a single property. We will start by trying to create interesting \(\gamma\), we will then discuss of the construction of \(\tau\).
 
