@@ -1,0 +1,71 @@
+\documentclass{article}
+\usepackage{amsthm}
+\usepackage{comment}
+\usepackage{mathbbol}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\usepackage[skip=4pt]{caption}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{relsize}
+\usepackage{listings}
+
+\usepackage[bibstyle=authoryear, style=numeric, citestyle=numeric-comp, backend=bibtex]{biblatex}
+\bibliography{bibliography/krr,bibliography/procs,local}
+
+% Begin Variables definition
+\newcommand\widthimg{11cm}
+% End Variables definition
+
+
+
+\begin{document}
+
+\title{\huge{Individual Research Module: Plan Merging}}
+
+\author{
+\\[1cm] \textbf{Supervisors}
+\\[0.2cm] Klaus Strauch 
+\\[0.2cm] Torsten Schaub
+\\[0.2cm] Etienne Tignon
+\\[3cm] Aurélien SIMON }
+
+\maketitle
+\thispagestyle{empty}
+
+\pagenumbering{arabic} 
+
+
+\newpage
+\setcounter{page}{1}
+\tableofcontents
+\newpage
+\listoffigures
+
+\newpage
+
+\input{section/introduction.tex}
+
+\input{section/background.tex}
+
+\input{section/ipf.tex}
+
+\input{section/merging.tex}
+
+% \input{section/misc.tex}
+\newpage
+\input{section/conclusion.tex}
+\newpage
+
+
+\section{References}
+\printbibliography[heading=none]
+
+\section*{Appendix}
+\input{section/appendix.tex}
+\end{document}
