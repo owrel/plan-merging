@@ -267,15 +267,11 @@ This heatmap-per-agent can be used to compute a ``global one'', to do so, for ea
   \Phi(v,t,\tau) = \frac{ {\sum^{\gamma \in \tau} }{\phi(v,t,\gamma)}}  {|\tau|}
 \]
 
+Computed this way, global heatmaps no longer represent likelihood of presence, rather more an indicator. Both heatmaps together can be useful for different parts of plan merging resolution.
 
+The heatmap we proposed is from the perspective of agents, but it can also be considered from \(\gamma\) scope, especially paths. It can then become a property of a path. These likelihoods per paths gives us information one the path itself; having highs values represent that a vertex is used in different paths of \(\gamma\), a low average value represent a higher diversity, and so on.
 
-Computed this way, global heat maps no longer represent likelihood of presence, rather more an indicator. Both heat maps together can be useful for different parts of plan merging resolution.
-
-
-
-The heatmap we proposed is from the perspective of agents, but it can also be considered with regards to the \(\gamma\)'s scope, especially paths and then, can become a property of a path. These likelihoods per paths gives us information one the path itself; having highs values represent that a vertex is used in different paths of \(\gamma\), a low average value represent a higher diversity and so on.
-
-It becomes more interesting when we use these values as an objective function; allowing a maximum value for any \(\phi\) in an \(\gamma\) directly influence the way \(\gamma\) would be constituted; for instance, limiting the \(\phi\) value of a \(gamma\) for any vertex at maximum 0.4, forces the number of paths of at least three. Generally, the maximum or minimum value of \(\phi\) for any \(\gamma\) gives us information on how the paths are interacting.
+It becomes more interesting when we use these values as an objective function; allowing a maximum value for any \(\phi\) in an \(\gamma\) directly influence the way \(\gamma\) would be constituted. For instance, limiting \(\phi\) values of \(\gamma\) for any vertex at maximum of 0.4, forces the number of paths of at least three. Generally, the maximum, minimum and average value of \(\phi\) for any \(\gamma\) gives us information on how the paths are interacting. 
 
 
 

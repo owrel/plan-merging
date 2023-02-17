@@ -104,85 +104,24 @@ Approach presented above are not complete and aim to reduce the space search or 
   \includegraphics[width=\widthimg]{img/systematic_instance.drawio.png}
 \end{figure}
 
-We can use solving strategies described in paper~\cite{husvobbass22a,husvobbass22b}. These paper introduce four different strategies; Baseline Strategy,  Makespan-add Strategy, Prune-and-cut strategy and the Combined strategy. For short, these strategies are using a \(k-restricted graph\) which is similar to sub-graph; it takes a shortest path \(SP\) to define a subgraph, it also add ``vertices that are at most distance \(k\) away from some vertex in \(SP\)". The main idea is to add vertices and/or raise the makespan and see if a solution exist. According to the benchmarks, the Combined strategy seems to to most successful.
+We can use solving strategies described in paper~\cite{husvobbass22a,husvobbass22b}. These paper introduce four different strategies; Baseline Strategy, Makespan-add Strategy, Prune-and-cut strategy and the Combined strategy. For short, these strategies are using a \(k-restricted graph\) which is similar to sub-graph; it takes a shortest path \(SP\) to define a subgraph, it also add ``vertices that are at most distance \(k\) away from some vertex in \(SP\)". The main idea is to add vertices and/or raise the makespan and see if a solution exist. According to the benchmarks, the Combined strategy seems to to most successful.
 
 \subsubsection{Improving subgraphs with heatmaps}
 
-An advantage of the subgraphs approach is that the approach can work till the subgraph contains the initial and final position and is connected. We can then, instead of increasing its size as we proposed before, prune part of the graph. To do so, we can aim specific vertices of the graph that can be identified using heatmap (see~\ref{sec:heatmap}). In a way, we can try to reduce \(\Phi\) values of the global heatmap by removing some vertices of subgraphs. We can imagine different criteria that would be deciding which vertex can, or should be pruned, for instance we can select vertex of the subgraph that has a high \(\Phi\) value but a low \(\phi\), in other words, removing vertices that are, for an agent not essential, but used by other agents.
+An advantage of the subgraphs approach is that the approach can work till the subgraph contains the initial and final position and is connected. We can then, instead of increasing its size as we proposed before, prune part of the graph. To do so, we can aim specific vertices of the graph that can be identified using heatmap (see~\ref{sec:heatmap}). In a way, we can try to reduce \(\Phi\) values of the global heatmap by removing some vertices of subgraphs. We can imagine different criteria that would be deciding which vertex can, or should be pruned, for instance we can select vertices of the subgraph that have a high \(\Phi\) value but a low \(\phi\) one. In other words, removing vertices that are, for an agent not ``essential'' because not used multiple times, but used by other agents. 
 
-On the other hand, heatmap can be used to tune the different approach we described before. For instance, we can apply bigger diamond extension on a vertex that have a conflict and a high \(\Phi\) value. 
+On the other hand, heatmap can be used to tune the different approaches we described before. For instance, we can apply bigger diamond extension on a vertex that have a conflict and a high \(\Phi\) value, or even selecting which agent the extension would be applied on. 
 
+\newpage
+\subsection{Guiding the agents}
 
+We described above strategies working with sub-graphs, however we can use \(\tau\) in other way; guiding the agents. \(\tau\) serves then the purpose of indicates where agents can or should be. A possible representation is the global heatmap, by valuing the graph the agents evolve on, we can build path for an agent that are not contained in its \(\gamma\). The global idea is to make the agent follow the lowest values of the global heatmap to avoid conflict. Since the heatmap is defined per time step, we are guarantee that the agents will move towards their goal position.
 
+The process of solving must handle at least two scenarios: one where no conflicts arise while selecting vertices, and another where selecting the lowest heat value would result in a conflict at the next step, with no other options available. The first scenario represents normal behavior, where each step involves selecting the most appealing vertex. The second scenario involves proposing different approaches to address the absence of options available in the heatmap to avoid conflict. If the next conflict involves a vertex, one of the agents creating the conflict can wait. If the conflict is an edge conflict, one of the agents must move to an uncovered vertex. However, this is not always feasible, and in such cases, heuristics must be applied since the heatmap alone does not seem to provide a solution.
 
-% \subsection{Guiding the agents}
+It is likely that the steps outlined above will be subject to modification in the future, given that they have not been implemented or experimentally tested yet. As such, it remains uncertain whether the proposed approaches would prove effectiveness.
 
-% We described above strategies working with sub-graphs, however we can use \(\tau\) in other way. Instead of creating subgraph, we can uses all of the paths in \(\tau\) to create a ``heatmap''. Heatmap describe where agents has the most probable position. To do so, we project the probability of presence on each nodes of the graph for each time step. We can define two types of heatmaps, a ``global heatmap'', which refer to the heatmap considering all agents. And one specific to an agent, called ``local'' heatmap, respectively, we have  \(Heat(\tau)\) and \(heat(\gamma_a)\). We can define local as such:
+One notable feature of the heatmap approach is that it is able to take into account paths of varying lengths, which is not that flagrant with subgraphs. Lastly, it seems that heatmaps tend to be also an approach that can handle properly robustness~\cite{atstfestko20a}, which correspond to the fact that agents can time to time wait at a vertex (mimic an unpredictable problem for realistic scenarios).
 
-% \[
-%  heat(\gamma) = 
-% \]
-
-% Global heatmap is made of all local ones; in other words, for each nodes of the graph, we sum the probability of presence for each agent, the total being divided by the number of agents. There is some properties that we can infer from the global heatmap: if a node has a joined presence probability \(P\) of 1, we can tell that \(\tau\) contains no selection of paths for each agent such as no conflict occurs. This event is a specific case of a more general definition:
-
-% \begin{definition}
-%   If there is a vertex  \(v \in V\) having a \(P(v) \geq  1-(1/|A|)\), where \(P(v)\) is computed given an input \(\tau\), it is not possible select a path \(\pi\) where \(v \in \pi\) for straight forward solving.   
-% \end{definition}
-
-% (need a proof)
-
-
-
-
-
-
-
-
-% The approach of heatmap uses the different path in \(\tau\) to project on graph the probability of presence of an agent. The figure~\ref{img:heatmap} shows the heat map of a graph considering \(\tau\) with two agents; a red one with two paths and a blue one with one path. 
-
-
-
-% Using these ``probability of presence'' we can select which path to select to, in this case reduce
-
-
-
-
-
-% \subsubsection{Heatmap as a comparison tool}
-
-% Global heatmap as we define it may also be a way to compare \(\tau\) together, respectively agent heatmap to another possible \(\gamma\) for a same agent. We can use a visual way to represent and compare different \(\gamma\) or \(\tau\). Even thought it it might not be the most reliable way, but it may be useful in order to fast compare multiple ones, for instance, the figure~\ref{img:colored_heatmap} shows how the complete figure~\ref{img:heatmap} (or the figure~\ref{apx:heatmap_and_global}) could look like with some coloration.  
-
-% \begin{figure}[H]
-%   \centering
-%   \caption{Proposition of coloration for an agent heatmap, gradient from white (no presence), green (few presence) to red (high presence)}\label{img:colored_heatmap}
-%   \includegraphics[width=\widthimg]{img/colored_heatmap.drawio.png}
-% \end{figure}
-
-% Furthermore, we formulate the following assumption \textit{``having a heatmap (global or agent one) that have the lowest sum of \(\phi\) and the lowest maximum \(\phi\) possible is desirable''} do not sound like a costly assumption. Given this assumption, we can then order different \(\gamma\) or \(\tau\) heatmaps. It of course, necessitate that the assumption is true, which may be (partially) decided with experiments.   
-
-
-\subsection{Heatmap for subgraph}
-
-\subsubsection{Straightforward solving}
-
-
-
-
-
-\subsection{Heatmap as a solving strategy}
-
-
-\subsubsection{Misc}
-
-
-
-\begin{itemize}
-  \item X Can help for making \(\tau\) ; The way we define \(\phi\) can be an objective function; trying to minimize the sum of every \(\phi\) 
-  \item Comparing \(\tau\) ; It seems that it is a visual and easy way to compare two different \(\tau\), compare to other properties of paths that we defined, this one seems the most appropriate for comparison.
-  \item Can help on the decision if the straight forward resolution is possible.
-  \item Helping for the subgraph subgraph; we can remove part of the subgraph for some agent where the global heat indicator is high and sees if ot relax the problem or not (keeping a connected subgraph). It can also probably provide information on which vertex could be added instead
-  \item Solving by Guiding the agent
-  \item Suit easily for robustness
-\end{itemize}
 
 
