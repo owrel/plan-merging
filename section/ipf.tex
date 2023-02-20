@@ -4,7 +4,7 @@ This section describes functions that can be used as cost/objective function. Th
 
 \subsection{Formalization}
 
-Individual Path Finding (IPF) aims to compute for each agent, a non-empty set of paths. IPF can be summarized as ``MAPF without collisions''; it takes the same input as MAPF (see \ref{sec:background}), it however differ on the output. The output is a triple \((V,E,\tau)\) where \(\tau\) is a set where the relation is bijective, considering an agent \(a \in A\), we have  \(\tau[a]\) being a non-empty set of path, we can refer to \(\tau[a]\) with \(\gamma\) or \(\gamma_a\) if necessary for better understanding or lighter notation. Let an agent \(a=(s,g)\), for any \(\pi\in \gamma_a\), \(\pi(0) = s\) and \(\pi(|\pi|-1) = g\). Thus, every paths composing \(\gamma\) can have a different length.
+Individual Path Finding (IPF) aims to compute for each agent, a non-empty set of paths. IPF can be summarized as ``MAPF without collisions''; it takes the same input as MAPF (see \ref{sec:background}), it however differs on the output. The output is a triple \((V,E,\tau)\) where \(\tau\) is a set where the relation is bijective, considering an agent \(a \in A\), we have  \(\tau[a]\) being a non-empty set of path, we can refer to \(\tau[a]\) with \(\gamma\) or \(\gamma_a\) if necessary for better understanding or lighter notation. Let an agent \(a=(s,g)\), for any \(\pi\in \gamma_a\), \(\pi(0) = s\) and \(\pi(|\pi|-1) = g\). Thus, every path composing \(\gamma\) can have a different length.
 
 
 We will then list and classify what can be the different kind of paths that can compose \(\tau\), what are their properties, advantages and inconvenient.
@@ -18,11 +18,11 @@ We also define the \(pick\) function which allows lighter notation; \(pick\) tak
 \subsection{Properties of a Path}
 
 \subsubsection{Path of defined length}
-A noticeable property is the \textbf{length} of the path, denoted as \(|\pi|\). We can distinguish two cases; the length is the minimal possible or it is strictly higher than the minimal. The first case gives us a lower bound for searching a solution, and if a solution exists using only shortest path, it is an optimal solution. In the second case optimality is no longer guarantee. However, working with path of defined length, combined with knowledge of the graph, it can make the ``field of action'' for the merging algorithm wider, which can result of finding a solution, but also rise the number of possibilities which can lead to more computing difficulties.
+A noticeable property is the \textbf{length} of the path, denoted as \(|\pi|\). We can distinguish two cases; the length is the minimal possible, or it is strictly higher than the minimal. The first case gives us a lower bound for searching a solution, and if a solution exists using only shortest path, it is an optimal solution. In the second case optimality is no longer guarantee. However, working with path of defined length, combined with knowledge of the graph, it can make the ``field of action'' for the merging algorithm wider, which can result of finding a solution, but also rise the number of possibilities which can lead to more computing difficulties.
 
 
 \begin{definition}[Shortest Path (SP)]\label{def:shortest_path}
-  Given an initial and a final position, an associated path \(\pi\) is in the set \(SP\) if \(\pi\) is valid and no path \(\pi'\) such as \(|\pi| > |\pi'|\). Generally, \(SP\) the set of all of the shortest path possible for a given initial and final position. For lighter notation, \(|SP^i|\) to the size of  paths \(\pi\) composing \(SP\)
+  Given an initial and a final position, an associated path \(\pi\) is in the set \(SP\) if \(\pi\) is valid and no path \(\pi'\) such as \(|\pi| > |\pi'|\). Generally, \(SP\) the set of all the shortest path possible for a given initial and final position. For lighter notation, \(|SP^i|\) to the size of  paths \(\pi\) composing \(SP\)
 \end{definition}
 
 
@@ -35,7 +35,7 @@ A noticeable property is the \textbf{length} of the path, denoted as \(|\pi|\). 
 
 \subsubsection{Path containing bending(s)}
 
-Counting bending in a path require to work on a graph using cartesian coordinate system. From coordinates we can compare angles of the vectors made from the current vertex and the previous one, to the current one and the next one. If angles are equals, it means that the path is continuing in its previous direction (angles have the same direction), otherwise a direction change is identified. Formally, we can define a bending in an cartesian coordinate system of the path \(\pi\) at time step \(t\) as such: \[
+Counting bending in a path require working on a graph using Cartesian coordinate system. From coordinates, we can compare angles of the vectors made from the current vertex and the previous one, to the current one and the next one. If angles are equals, it means that the path is continuing in its previous direction (angles have the same direction), otherwise a direction change is identified. Formally, we can define a bending in a Cartesian coordinate system of the path \(\pi\) at time step \(t\) as such: \[
  u = \overrightarrow{(\pi(t-1),\pi(t))} \text{ and  } v = \overrightarrow{(\pi(t),\pi(t+1))}
 \]
 \[
@@ -50,7 +50,7 @@ Counting bending in a path require to work on a graph using cartesian coordinate
 
 If a ``waiting'' move is considered as a vector of size 0, by definition, any vector of size 0 is ``perpendicular'' to any other one.
 
-It is important to mention that approach for counting bendings makes sense for a grid scenario with defined and restricted directions; there high chance that bendings definition should be changed for scenarios working with continuous directions or a 3+ dimension. 
+It is important to mention that approach for counting bendings makes sense for a grid scenario with defined and restricted directions; there high chance that bendings' definition should be changed for scenarios working with continuous directions or a 3+ dimension. 
 Given the number of bending, we can deduce information; with zero bending, we can trivially deduce that the initial position and the goal position are on the same column or row, furthermore the path is in \(SP\).
 
 
@@ -125,13 +125,13 @@ We can then compare sets of paths:
   pathc(\gamma,\gamma') = \mathlarger{\sum}_{\pi,\pi'}^{\forall \pi \in \gamma,\forall \pi' \in \gamma'}{
         pc(\pi,\pi')
     }
-\] where \(\gamma\) an \(\gamma'\) are different sets of path, typically coming from \(\tau[a_{\in A}]\) and \(\tau[a'_{\in A}]\). We can then define \[
+\] where \(\gamma\) a \(\gamma'\) are different sets of path, typically coming from \(\tau[a_{\in A}]\) and \(\tau[a'_{\in A}]\). We can then define \[
     PathC(\tau)= \sum_{a,a'}^{\forall a \neq a' \in A}{
         pathc(\tau[a],\tau[a'])
     }
 \]
 
-Another interesting function would be to compare a single path to a set of path \(\gamma\) or \(\tau\), indeed comparing all of the set of agents to all others, if their respective set of paths are large, the meaning of the comparison becomes blurry. We can in consequences define other functions that aims to keep interesting result not matter how much paths it takes as input:
+Another interesting function would be to compare a single path to a set of path \(\gamma\) or \(\tau\), indeed comparing all the set of agents to all others, if their respective set of paths are large, the meaning of the comparison becomes blurry. We can in consequences define other functions that aims to keep interesting result not matter how much path it takes as input:
 
 \[ 
   pathc(\gamma,\pi) = \mathlarger{\sum}_{\pi'}^{\forall \pi' \in \gamma}{
@@ -152,10 +152,10 @@ Another point to mention is that the definition is not complete; if two paths ha
       true   & \text{if }  since(\pi,t) \subset  since(\pi',t) \\
       false  & \text{otherwise}
     \end{cases}
-  \] (We read ``path \(\pi\) is blocking path \(\pi'\) at time step \(t\)"). Where the function \(since\) is define as:
+  \] (We read ``path \(\pi\) is blocking path \(\pi'\) at time step \(t\)"). Where the function \(since\) is defined as:
   \[
     since(\pi,t) = \bigcup_{i=t}^{i \rightarrow |\pi|-1} \{\pi(i)\}  
-  \] which represent the set of vertices in \(\pi\) from \(t\) until the end of the path .
+  \] which represent the set of vertices in \(\pi\) from \(t\) until the end of the path.
   
   It is called  ``fully-blocking''  if  \(a\) is a blocking \(a'\) at time step 0 (also see figure\ref{img:blocking_agent}). 
 \begin{figure}[H]
@@ -167,7 +167,7 @@ Another point to mention is that the definition is not complete; if two paths ha
 
 
 \subsubsection{Potential conflict}
-Potential conflict aims to count conflict occurring between paths without considering time step, in other words it delineate the union of common vertices between a all paths. it differs with path conflict by the fact that path conflict are defined according to time step, which is not the case for potential conflict. By definition, path conflict are specific cases of potential conflict, you can see as instance the figure~\ref{img:potential_conflict} which represent an isntance where no collision would occur, however there is a potential conflict represented by the yellow node. 
+Potential conflict aims to count conflict occurring between paths without considering time step, in other words it delineates the union of common vertices between all paths. It differs with path conflict by the fact that path conflict are defined according to time step, which is not the case for potential conflict. By definition, path conflict are specific cases of potential conflict, you can see as instance the figure~\ref{img:potential_conflict} which represent an instance where no collision would occur, however there is a potential conflict represented by the yellow node. 
 
 \begin{figure}[H]
   \centering
@@ -204,13 +204,13 @@ We do not separate vertex conflict and edge conflict since it is by definition, 
 % \]
 
 \subsubsection{Conflict window}\label{sec:conflict_window}
-A conflict window is defined with a couple of vertices \((v,v')\in V\) in a graph with orthonormal coordinate system, we also introduce the function \(coordinate:  V \rightarrow (\mathbb{N},\mathbb{N})\) which gives the coordinate associated to a vertex. Let \(C\) be a set containing all conflicts (these can be path or plan conflict), formally it can be define as \[
+A conflict window is defined with a couple of vertices \((v,v')\in V\) in a graph with orthonormal coordinate system, we also introduce the function \(coordinate:  V \rightarrow (\mathbb{N},\mathbb{N})\) which gives the coordinate associated to a vertex. Let \(C\) be a set containing all conflicts (these can be path or plan conflict), formally it can be defined as \[
     C = \{v  | v \in V, conflict(v)\}
-\] where \(conflict\) is a boolean condition; true if a conflict exist at vertex \(v\), else false. The next step is to ``draw" a rectangle (see \nameref{img:conflict_window} figure). To do so,  we use the the coordinates of vertices in \(C\) to construct this ``rectangle''. A conflict window is a set \(CW\) of vertices define as such: \[
+\] where \(conflict\) is a boolean condition; true if a conflict exist at vertex \(v\), else false. The next step is to ``draw'' a rectangle (see \nameref{img:conflict_window} figure). To do so,  we use the coordinates of vertices in \(C\) to construct this ``rectangle''. A conflict window is a set \(CW\) of vertices define as such: \[
   CW(C) = \{ v | v \in V, min_x(C) \leq x(v) \leq max_x(C), min_y(C) \leq y(v) \leq max_y(C)\}
 \]
 
-We described the approach to build one conflict window, however we can easily imagine building multiple by dividing the set of conflict into multiple subset. We however require that taken pairwisely, \(CW \cap   CW' = \emptyset, CW\neq CW' \); we could end-up with overlapping conflict window, which reduce the usefulness. The example in figure~\ref{img:conflict_window} shows four agents where three path conflict occurs. It also shows the resulting conflict windows; we can see that angles of the conflict window are not necessarily path conflict. 
+We described the approach to build one conflict window, however we can easily imagine building multiple one by dividing the set of conflict into multiple subset. We however require that taken pairwisely, \(CW \cap   CW' = \emptyset, CW\neq CW' \); we could end-up with overlapping conflict window, which reduce the usefulness. The example in figure~\ref{img:conflict_window} shows four agents where three path conflict occurs. It also shows the resulting conflict windows; we can see that angles of the conflict window are not necessarily path conflict. 
 
 \begin{figure}[H]
   \centering
@@ -221,7 +221,7 @@ We described the approach to build one conflict window, however we can easily im
 
 \subsubsection{Diversity}\label{sec:diversity}
 
-Computing diverse path is mainly done using two different diversity measure; based on the Jaccard similarity coefficient (see \cite{habochal21a}), or on the the symmetry difference (also called Hamming distance) (see \cite{hanaka2022computing}) of two sets, we will respectively refer to them as \(diversity_j(\gamma)\) and \(diversity_{\bigtriangleup}(\gamma)\). Both compute diversity among two sets. The Jaccard similarity is defined as the size of the intersection of two sets divided by the size of the union of the two sets. In other words, it is a measure of how similar two sets are, based on the number of elements they have in common. we use them for computing diversity among two set of vertex issued from paths. The Hamming distance is a measure of the difference between two sequences of equal length. It is defined as the number of positions at which the corresponding symbols are different. The difference between the is that the Jaccard index focuses on the number of nodes that two paths have in common, while the Hamming distance focuses on the number of differences between the two paths. If we adapt the notation from the papers, we have
+Computing diverse path is mainly done using two different diversity measure; based on the Jaccard similarity coefficient (see \cite{habochal21a}), or on the symmetry difference (also called Hamming distance) (see \cite{hanaka2022computing}) of two sets, we will respectively refer to them as \(diversity_j(\gamma)\) and \(diversity_{\bigtriangleup}(\gamma)\). Both compute diversity among two sets. The Jaccard similarity is defined as the size of the intersection of two sets divided by the size of the union of the two sets. In other words, it is a measure of how similar two sets are, based on the number of elements they have in common. We use them for computing diversity among two set of vertex issued from paths. The Hamming distance is a measure of the difference between two sequences of equal length. It is defined as the number of positions at which the corresponding symbols are different. The difference between the is that the Jaccard index focuses on the number of nodes that two paths have in common, while the Hamming distance focuses on the number of differences between the two paths. If we adapt the notation from the papers, we have
 \[
   diversity_j(\gamma)=\sum_{\forall \pi,\pi' \in \gamma}{JaccardCoefficient(vertex(\pi),vertex(\pi'))}
 \]
@@ -235,7 +235,7 @@ Computing diverse path is mainly done using two different diversity measure; bas
 
 
 \subsubsection{Distant}\label{sec:distant}
-Let \(\gamma\) being a set of path of length \(n\), where all of the path have the same initial and ending position. Let \(\pi,\pi' \in \gamma\) two different paths. \(\pi\) and \(\pi'\) are considered ``most distant'' if no other path in \(\gamma\) have a higher distance. Distance between two paths is computed as such :
+Let \(\gamma\) being a set of path of length \(n\), where all the path have the same initial and ending position. Let \(\pi,\pi' \in \gamma\) two different paths. \(\pi\) and \(\pi'\) are considered ``most distant'' if no other path in \(\gamma\) have a higher distance. Distance between two paths is computed as such :
 
 
 \[
@@ -253,7 +253,7 @@ Heatmap~\cite{atstfestko20a} is about projecting likelihood of presence of agent
   \phi(v, t, \gamma) = \frac{ |\{ \pi | \pi \in \gamma, \pi(t) = v \}|}{|\gamma| }
 \]
   
-From this definition, we can compute the first three step of an agent with an associated \(|\gamma|=3\) below (figure~\ref{img:heatmap}).
+From this definition, we can compute the first three steps of an agent with an associated \(|\gamma|=3\) below (figure~\ref{img:heatmap}).
 
 \begin{figure}[H]
   \centering
@@ -269,10 +269,11 @@ This heatmap-per-agent can be used to compute a ``global one'', to do so, for ea
 
 Computed this way, global heatmaps no longer represent likelihood of presence, rather more an indicator. Both heatmaps together can be useful for different parts of plan merging resolution.
 
-The heatmap we proposed is from the perspective of agents, but it can also be considered from \(\gamma\) scope, especially paths. It can then become a property of a path. These likelihoods per paths gives us information one the path itself; having highs values represent that a vertex is used in different paths of \(\gamma\), a low average value represent a higher diversity, and so on.
+The heatmap we proposed is from the perspective of agents, but it can also be considered from \(\gamma\) scope, especially paths. It can then become a property of a path. These likelihoods per paths give us information one the path itself; having highs values represent that a vertex is used in different paths of \(\gamma\), a low average value represent a higher diversity, and so on.
 
-It becomes more interesting when we use these values as an objective function; allowing a maximum value for any \(\phi\) in an \(\gamma\) directly influence the way \(\gamma\) would be constituted. For instance, limiting \(\phi\) values of \(\gamma\) for any vertex at maximum of 0.4, forces the number of paths of at least three. Generally, the maximum, minimum and average value of \(\phi\) for any \(\gamma\) gives us information on how the paths are interacting. 
+It becomes more interesting when we use these values as an objective function; allowing a maximum value for any \(\phi\) in a \(\gamma\) directly influence the way \(\gamma\) would be constituted. For instance, limiting \(\phi\) values of \(\gamma\) for any vertex at maximum of 0.4, forces the number of paths of at least three. Generally, the maximum, minimum and average value of \(\phi\) for any \(\gamma\) gives us information on how the paths are interacting. 
 
+Lastly, it seems that heatmaps tend to be also a representation that can handle properly robustness~\cite{atstfestko20a}, which correspond to the fact that agents can time to time wait at a vertex (mimic an unpredictable problem for realistic scenarios).
 
 
 % \subsection{Building interesting \(\tau\)}

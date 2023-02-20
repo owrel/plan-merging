@@ -1,9 +1,9 @@
 \section{Background}\label{sec:background}
 
-The following definitions of Multi-Agent Path Finding (MAPF) follow the ones in~\cite{husvobbass22a}. MAPF is a triple $(V,E,A)$ where \(V,E\) denotes a connected graph, \(V\) being a set of vertices and \(E\) a set of edges connecting them. Then \(A\) being a set of agents. For each agents \(a=(s,g) \in A\), \(s\) is a vertex in \(V\) denoting the starting location and \(g\) is also a vertex in \(V\) denoting the goal location. We consider that every starting position and every goal position are disjoint.
+The following definitions of Multi-Agent Path Finding (MAPF) follow the ones in~\cite{husvobbass22a}. MAPF is a triple $(V,E,A)$ where \(V,E\) denotes a connected graph, \(V\) being a set of vertices and \(E\) a set of edges connecting them. Then \(A\) being a set of agents. For each agent \(a=(s,g) \in A\), \(s\) is a vertex in \(V\) denoting the starting location and \(g\) is also a vertex in \(V\) denoting the goal location. We consider that every starting position and every goal position are disjoint.
 For each discrete time step \(t\in \mathbb{N}_0\), an agent can either; wait at its current vertex or move to a neighboring one.
 
-The output for MAPF problems is a a plan. A plan being a collection $(\pi_a)_{a\in A}$ of finite walks in $(V,E)$ where each walk $\pi_a$ is represented by a finite sequence of adjacent or identical vertices in $V$ from $s$ to $g$ for agent $a = (s,g)$. We use \(\pi_a (t) = v\) to denote that agent \(a\) is located at vertex \(v\) at time step \(t\). 
+The output for MAPF problems is a plan. A plan being a collection $(\pi_a)_{a\in A}$ of finite walks in $(V,E)$ where each walk $\pi_a$ is represented by a finite sequence of adjacent or identical vertices in $V$ from $s$ to $g$ for agent $a = (s,g)$. We use \(\pi_a (t) = v\) to denote that agent \(a\) is located at vertex \(v\) at time step \(t\). 
 As consequences, for each \(a=(s,g) \in A\), we have $\pi_a(0) = s$ and  $\pi_a(|\pi_a|-1) = g$ (where $|\pi_a|$ gives the length of walk $\pi_a$). Generally, for any \(a=(s,g)\) and any $0 \leq t \leq |\pi_a|-1$, we have \(\pi_a(t) \in V\). In addition, we also have $(\pi_a(t),\pi_a(t+1))\in E$ with $0 \leq t < |\pi_a|-1$
 
 A plan is considered as \textit{valid} if, taken pairwisely, walks are collision-free. A vertex conflict occurs whenever two different agents occupy the same vertex at the same time step. Formally, we have \(conflict(a,a',t)\) if given any $a,a'\in A$  and $t\in\mathbb{N}_0$, we have $\pi_a(t) = \pi_{a'}(t)$. An edge conflict (or swapping conflict) occurs whenever two agents exchange their position or are using the same vertex at the same time, which implies that edge conflict is defined on time step \(t\) and \(t-1\). We have \(conflict(a,a',t)\) if given any $a,a'\in A$  and $t\in\mathbb{N}_0$, we have $\pi_a(t-1) = \pi_{a'}(t)$ and $\pi_a(t) = \pi_{a'}(t-1)$.
@@ -13,7 +13,7 @@ A plan $(\pi_a)_{a\in A}$ has a conflict, if a conflict $(a, a',t)$ occurs in $(
 \textit{Sum-of-costs} and \textit{makespan} of a plan $(\pi_a)_{a\in A}$ are respectively defined as such; $\sum_{a\in A} (|\pi_a| - 1)$ and $\max_{a\in A} (|\pi_a| - 1)$.
 
 
-Furthermore, we also define in which MAPF problem specification the following work has been conducted. Since we would define object that require distance and/or coordinates such as rectangle or circles, we will consider that graphs have cartesian coordinate system, which means we can represent them as a grid. In addition we work on a non-anonymous MAPF variant with edge conflict and vertex conflict. 
+Furthermore, we also define in which MAPF problem specification the following work has been conducted. Since we would define object that require distance and/or coordinates such as rectangle or circles, we will consider that graphs have Cartesian coordinate system, which means we can represent them as a grid. In addition, we work on a non-anonymous MAPF variant with edge conflict and vertex conflict. 
 
 
 
